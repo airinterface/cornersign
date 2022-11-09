@@ -24,13 +24,13 @@ try:
     epd.Clear()
 
     font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
-    font40 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 40)
+    font80 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 80)
 
     # Drawing on the Horizontal image
     logging.info("1.Drawing on the Horizontal image...")
     Himage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
     draw = ImageDraw.Draw(Himage)
-    draw.text((10, 0), 'hello world', font = font40, fill = 0)
+    draw.text((10, 0), 'hello world', font = font80, fill = 0)
     epd.display(epd.getbuffer(Himage))
     time.sleep(2)
 
