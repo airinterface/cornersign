@@ -10,7 +10,6 @@ from datetime import datetime
 BUCKET_NAME=os.getenv("BUCKET_NAME")
 KEY_NAME="data.json"
 rel_data = os.path.dirname( __file__ )
-print( f"directory = {rel_data}")
 
 def get_config():
     f = open(os.path.join( rel_data, "subway_data.json"))
@@ -21,7 +20,7 @@ def update_data():
     times = get_data();
     save_data( times )
 
-    
+
 def generate_data():
     data = {}
     data['data'] = []
@@ -35,7 +34,7 @@ def save_data( data ):
              Key=KEY_NAME
         )
     except Exception as e: 
-        print( e.message )
+        print( e )
 
 def get_data():
     config = get_config();

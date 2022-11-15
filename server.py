@@ -1,7 +1,11 @@
 from flask import Flask
-from .data_modules.subway.main import update_data as update_subway_data
+from data_modules.subway.main import update_data as update_subway_data
 
 app = Flask(__name__)
+
+from dotenv import load_dotenv
+# Loading up the values
+load_dotenv()
 
 @app.route('/')
 def hello_world():

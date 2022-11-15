@@ -15,7 +15,9 @@ export E_PAPER_LIB_DIR=<Directory where you have e-Paper Project>/RaspberryPi_Je
    And get the api key 
    export MTA_API_KEY = < API KEY > 
 
+   or add to .env below
+   BUCKET_NAME, MTA_API_KEY
 
 3. venv activate
-3. run python app.py
+4. run python app.py
 
