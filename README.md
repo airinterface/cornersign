@@ -19,5 +19,7 @@ export E_PAPER_LIB_DIR=<Directory where you have e-Paper Project>/RaspberryPi_Je
    BUCKET_NAME, MTA_API_KEY
 
 3. venv activate
+   from raspberry pi, we need to read the data. Make sure it has 
+   MTA_DATA_URL=<Location of the data >
 4. run python app.py
 

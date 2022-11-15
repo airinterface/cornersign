@@ -7,11 +7,17 @@ picdir = os.path.dirname(os.path.realpath(__file__))
 if os.path.exists(libdir):
     sys.path.append(libdir)
 
+from dotenv import load_dotenv
+# Loading up the values
+load_dotenv()
+
+import urllib
 import logging
 from waveshare_epd import epd7in5_V2
 import time
 from PIL import Image,ImageDraw,ImageFont
 import traceback
+from display_module.subway import load_data;
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -30,7 +36,19 @@ try:
     logging.info("1.Drawing on the Horizontal image...")
     Himage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
     draw = ImageDraw.Draw(Himage)
-    draw.text((10, 0), 'hello world', font = font80, fill = 0)
+    dataset = load_data();
+    top = 5;
+    left = 5;
+    listIndent = 100;
+    if( dataset ):
+        logging.info("-----------------------")
+        logging.info( dataset )
+        for item in dataset:
+            if( item['type'] == 'title'):
+                draw.text((top, left), item['text'], font = font80, fill = 0)
+                top += 100
+            elif ( item['type'] == 'listItem'):
+                draw.text((top, left + listIndent ), item['text'], font = font24, fill = 0)
     epd.display(epd.getbuffer(Himage))
     time.sleep(2)
 
