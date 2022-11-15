@@ -1,14 +1,41 @@
 import json;
 import os;
 import math;
+import boto3;
 from urllib.request import Request, urlopen;
 from google.transit import gtfs_realtime_pb2
 from datetime import datetime
 
+
+BUCKET_NAME=os.getenv("BUCKET_NAME")
+KEY_NAME="data.json"
+rel_data = os.path.dirname( __file__ )
+print( f"directory = {rel_data}")
+
 def get_config():
-    f = open("subway_data.json")
+    f = open(os.path.join( rel_data, "subway_data.json"))
     data = json.load(f)
     return data;
+
+def update_data():
+    times = get_data();
+    save_data( times )
+
+    
+def generate_data():
+    data = {}
+    data['data'] = []
+
+def save_data( data ):
+    s3 = boto3.client('s3')
+    try:
+        s3.put_object(
+             Body=json.dumps(data, ensure_ascii=False),
+             Bucket=BUCKET_NAME,
+             Key=KEY_NAME
+        )
+    except Exception as e: 
+        print( e.message )
 
 def get_data():
     config = get_config();
@@ -30,7 +57,6 @@ def get_data():
     }
 
     now_in_mill_sec = datetime.timestamp(datetime.now())
-    print(f"now = {now_in_mill_sec}" )
     try: 
         with urlopen( Request(endpoint, headers=headers), timeout = 10 ) as response: 
             feed = gtfs_realtime_pb2.FeedMessage()
@@ -42,7 +68,6 @@ def get_data():
                         if stop.stop_id in stations:
                             dt_object = math.floor( ( stop.arrival.time - now_in_mill_sec ) / 60 )
                             times[stop.stop_id]["wait_time"].append(dt_object)
-        print( times )
     except HTTPError as error:
         print(error.status, error.reason)
     except URLError as error:
@@ -50,8 +75,9 @@ def get_data():
     except TimeoutError:
         print("Request timed out")
 
-
+    return times;
 
 
 if __name__ == '__main__':
-    get_data();
+    times = get_data();
+    save_data( times )

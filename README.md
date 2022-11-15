@@ -11,4 +11,11 @@ And set it to environment variable "E_PAPER_LIB_DIR"
 export E_PAPER_LIB_DIR=<Directory where you have e-Paper Project>/RaspberryPi_JetsonNano/python/lib
 
 
-2. run python app.py
+2. got to [https://api.mta.info/#/AccessKey](https://api.mta.info/#/AccessKey). Sign up if you haven't. 
+   And get the api key 
+   export MTA_API_KEY = < API KEY > 
+
+
+3. venv activate
+3. run python app.py
+
