@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, Response
 from data_modules.subway.main import update_data as update_subway_data
 
 app = Flask(__name__)
@@ -14,6 +14,9 @@ def hello_world():
 @app.route('/update_subway')
 def update_subway():
    update_subway_data();
+   response = Response(status=200)
+   return response
+
 
 if __name__ == "__main__":
    app.run(debug=True, host='0.0.0.0', port=8000)
