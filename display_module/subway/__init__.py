@@ -1,5 +1,7 @@
 import os;
 from urllib.request import Request, urlopen;
+from urllib.error import HTTPError, URLError
+
 import json
 MaxCount = 3
 def load_data():
