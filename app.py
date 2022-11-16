@@ -34,7 +34,7 @@ try:
     font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
     font80 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 80)
 
-    while( !paused ): 
+    while not paused: 
         # Drawing on the Horizontal image
         logging.info("1.Drawing on the Horizontal image...")
         Himage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
