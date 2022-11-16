@@ -8,7 +8,9 @@ def load_data():
     if ( mta_data_url ): 
         try: 
             with urlopen( Request(mta_data_url), timeout = 10 ) as response:
-                subway_data = json.loads( response.read().decode("utf-8"))
+                last_data = json.loads( response.read().decode("utf-8"))
+                subway_data = last_data['subway']
+                last_update = last_data['updated_date']
                 data = []
                 for stopItem in subway_data.items():
                     stop = stopItem[1]

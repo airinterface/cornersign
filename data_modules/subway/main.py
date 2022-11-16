@@ -18,17 +18,20 @@ def get_config():
 
 def update_data():
     times = get_data();
-    save_data( times )
+    updated_date = datetime.timestamp(datetime.now())
+    data = {
+        'updated_date': updated_date,
+        'subway': times
+    }
+    save_data( data )
 
 
-def generate_data():
-    data = {}
-    data['data'] = []
 
 def save_data( data ):
     s3 = boto3.client('s3')
     try:
         s3.put_object(
+             ACL='public-read',
              Body=json.dumps(data, ensure_ascii=False),
              Bucket=BUCKET_NAME,
              Key=KEY_NAME
