@@ -2,14 +2,16 @@
 # -*- coding:utf-8 -*-
 import sys
 import os
+from dotenv import load_dotenv
+# Loading up the values
+load_dotenv()
+
+
+
 libdir = os.getenv('E_PAPER_LIB_DIR')
 picdir = os.path.dirname(os.path.realpath(__file__))
 if os.path.exists(libdir):
     sys.path.append(libdir)
-
-from dotenv import load_dotenv
-# Loading up the values
-load_dotenv()
 
 import urllib
 import logging
