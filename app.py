@@ -22,7 +22,7 @@ import traceback
 from display_module.subway import load_data;
 
 logging.basicConfig(level=logging.DEBUG)
-
+paused = False;
 try:
     logging.info("epd7in5_V2 Demo")
     epd = epd7in5_V2.EPD()
@@ -34,26 +34,27 @@ try:
     font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
     font80 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 80)
 
-    # Drawing on the Horizontal image
-    logging.info("1.Drawing on the Horizontal image...")
-    Himage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
-    draw = ImageDraw.Draw(Himage)
-    dataset = load_data();
-    top = 1;
-    left = 5;
-    listIndent = 100;
-    if( dataset ):
-        logging.info("-----------------------")
-        logging.info( dataset )
-        for item in dataset:
-            if( item['type'] == 'title'):
-                draw.text((left, top), item['text'], font = font80, fill = 0)
-                top += 100
-            elif ( item['type'] == 'listItem'):
-                draw.text((left + listIndent, top), item['text'], font = font24, fill = 0)
-                top += 50
-    epd.display(epd.getbuffer(Himage))
-    time.sleep(2)
+    while( !paused ): 
+        # Drawing on the Horizontal image
+        logging.info("1.Drawing on the Horizontal image...")
+        Himage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
+        draw = ImageDraw.Draw(Himage)
+        dataset = load_data();
+        top = 1;
+        left = 5;
+        listIndent = 100;
+        if( dataset ):
+            logging.info("-----------------------")
+            logging.info( dataset )
+            for item in dataset:
+                if( item['type'] == 'title'):
+                    draw.text((left, top), item['text'], font = font80, fill = 0)
+                    top += 100
+                elif ( item['type'] == 'listItem'):
+                    draw.text((left + listIndent, top), item['text'], font = font24, fill = 0)
+                    top += 50
+        epd.display(epd.getbuffer(Himage))
+        time.sleep(30)
 
     # logging.info("Clear...")
     # epd.init()
@@ -66,6 +67,7 @@ except IOError as e:
     logging.info(e)
     
 except KeyboardInterrupt:    
+    paused = True
     logging.info("ctrl + c:")
     epd7in5_V2.epdconfig.module_exit()
     exit()
