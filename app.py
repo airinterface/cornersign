@@ -39,7 +39,7 @@ try:
     Himage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
     draw = ImageDraw.Draw(Himage)
     dataset = load_data();
-    top = 5;
+    top = 1;
     left = 5;
     listIndent = 100;
     if( dataset ):
@@ -47,10 +47,11 @@ try:
         logging.info( dataset )
         for item in dataset:
             if( item['type'] == 'title'):
-                draw.text((top, left), item['text'], font = font80, fill = 0)
+                draw.text((left, top), item['text'], font = font80, fill = 0)
                 top += 100
             elif ( item['type'] == 'listItem'):
-                draw.text((top, left + listIndent ), item['text'], font = font24, fill = 0)
+                draw.text((left + listIndent, top), item['text'], font = font24, fill = 0)
+                top += 50
     epd.display(epd.getbuffer(Himage))
     time.sleep(2)
 

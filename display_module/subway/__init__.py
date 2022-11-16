@@ -20,7 +20,7 @@ def load_data():
                     for timeItem in stop['wait_time']:
                         if( i < MaxCount ):
                             data.append({
-                                'text': "nonw" if timeItem <= 0 else f"{timeItem}min",
+                                'text': "now" if timeItem <= 0 else f"{timeItem}min",
                                 'type': 'listItem' 
                                 })
                         else:
